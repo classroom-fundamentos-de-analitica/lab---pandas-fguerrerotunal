@@ -158,10 +158,10 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    nueva1 =  pd.DataFrame({"_c0": sorted(list(tbl0["_c1"].drop_duplicates()))})
-    nueva2 = pd.DataFrame({"_c1": list(tbl0.groupby("_c1")["_c2"].apply(lambda x : ":".join(sorted([str(i) for i in x]))))})
+    nueva1 =  pd.DataFrame({"_c1": sorted(list(tbl0["_c1"].drop_duplicates()))})
+    nueva2 = pd.DataFrame({"_c2": list(tbl0.groupby("_c1")["_c2"].apply(lambda x : ":".join(sorted([str(i) for i in x]))))})
     full = pd.concat([nueva1, nueva2], axis=1)
-    return  full
+    return  full.set_index("_c1")
 
 def pregunta_11():
     """
@@ -222,6 +222,5 @@ def pregunta_13():
     """
     tbl0.set_index("_c0", inplace=True)
     tbl2.set_index("_c0", inplace=True)
-    mix = pd.concat([tbl0, tbl2], axis=1)
-    
+    mix = pd.concat([tbl0, tbl2], axis=1)  
     return mix.groupby("_c1")["_c5b"].sum()
